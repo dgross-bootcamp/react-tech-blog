@@ -1,0 +1,13 @@
+.AuthorContainer {
+  border-bottom: 1px solid lightgray;
+}
+
+.Avatar {
+  width: 70px;
+  height: 70px;
+  overflow: hidden;
+}
+
+.Name {
+  flex: 1;
+}

@@ -1,0 +1,16 @@
+.Image {
+  height: 250px;
+  aspect-ratio: 2/3;
+}
+
+.Date {
+  font-size: 0.75rem;
+}
+
+.Description {
+  font-size: 0.85rem;
+}
+
+.Link {
+  font-size: 0.75rem;
+}

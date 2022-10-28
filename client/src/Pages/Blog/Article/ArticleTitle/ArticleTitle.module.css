@@ -1,0 +1,13 @@
+.ImageContainer {
+  width: 45px;
+  height: 45px;
+  overflow: hidden;
+}
+
+.Date {
+  font-size: 0.75rem;
+}
+
+.AvatarContainer {
+  border-bottom: 1px dashed lightgray;
+}

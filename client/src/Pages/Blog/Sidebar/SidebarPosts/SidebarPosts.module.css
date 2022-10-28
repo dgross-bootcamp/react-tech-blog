@@ -1,0 +1,22 @@
+.PostsContainer {
+  border-bottom: 1px solid lightgray;
+}
+
+.PostBody {
+  flex: 1;
+}
+
+.Meta {
+  font-size: 12px;
+}
+
+.ImageContainer {
+  width: 90px;
+  height: 45px;
+}
+
+.PostBorder {
+  border-top: 1px solid lightgrey;
+  margin-top: 1rem;
+  padding-top: 1rem;
+}
