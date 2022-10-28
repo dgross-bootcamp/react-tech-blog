@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
 import styles from "./SidebarPosts.module.css";
 
-const mockPosts = [
+type Post = {
+  id: number;
+  title: string;
+  author: string;
+  date: string;
+};
+
+const mockPosts: Post[] = [
   {
     id: 1,
     title: "12 Surprising TypeScript Tricks You Need to Know",
