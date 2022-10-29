@@ -43,7 +43,6 @@ profileSchema.pre("save", function (next) {
         next();
     });
 });
-// crypto.createHash('md5').update(data).digest("hex");
 profileSchema.virtual("gravitron").get(function () {
     const hash = crypto_1.default
         .createHash("md5")
