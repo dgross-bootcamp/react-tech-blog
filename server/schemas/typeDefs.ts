@@ -7,8 +7,16 @@ const typeDefs = gql`
     author: String
   }
 
+  type Profile {
+    _id: ID
+    name: String
+    email: String
+    password: String
+  }
+
   type Query {
     books: [Book]
+    profiles: [Profile]
   }
 `;
 

@@ -12,10 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.books = void 0;
 const connection_1 = __importDefault(require("../config/connection"));
 const Book_1 = __importDefault(require("../models/Book"));
-exports.books = [
+const Profile_1 = __importDefault(require("../models/Profile"));
+const books = [
     {
         title: "The Awakening",
         author: "Kate Chopin",
@@ -25,11 +25,20 @@ exports.books = [
         author: "Paul Auster",
     },
 ];
+const profiles = [
+    {
+        name: "Ross",
+        email: "r@ross.gov",
+        password: "password",
+    },
+];
 connection_1.default.once("open", function () {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             yield Book_1.default.deleteMany({});
-            yield Book_1.default.create(exports.books);
+            yield Profile_1.default.deleteMany({});
+            yield Book_1.default.create(books);
+            yield Profile_1.default.create(profiles);
             console.log("🌱 Database Seeded! 🌱");
             process.exit(0);
         }

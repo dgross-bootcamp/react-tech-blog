@@ -13,12 +13,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const Book_1 = __importDefault(require("../models/Book"));
+const Profile_1 = __importDefault(require("../models/Profile"));
 const resolvers = {
     Query: {
         books: function () {
             return __awaiter(this, void 0, void 0, function* () {
-                const books = yield Book_1.default.find({});
-                return Promise.resolve(books);
+                return Book_1.default.find({});
+            });
+        },
+        profiles: function () {
+            return __awaiter(this, void 0, void 0, function* () {
+                return Profile_1.default.find({});
             });
         },
     },

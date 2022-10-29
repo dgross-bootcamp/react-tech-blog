@@ -1,10 +1,13 @@
 import Book, { IBook } from "../models/Book";
+import Profile, { IProfile } from "../models/Profile";
 
 const resolvers = {
   Query: {
     books: async function (): Promise<IBook[]> {
-      const books = await Book.find({});
-      return Promise.resolve(books);
+      return Book.find({});
+    },
+    profiles: async function (): Promise<IProfile[]> {
+      return Profile.find({});
     },
   },
 };
