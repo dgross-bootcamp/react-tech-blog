@@ -19,6 +19,11 @@ const profiles: IProfile[] = [
     email: "r@ross.gov",
     password: "password",
   },
+  {
+    name: "Dang Ross",
+    email: "dgross@instructors.2u.com",
+    password: "chartreuse",
+  },
 ];
 
 db.once("open", async function () {

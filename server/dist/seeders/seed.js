@@ -31,6 +31,11 @@ const profiles = [
         email: "r@ross.gov",
         password: "password",
     },
+    {
+        name: "Dang Ross",
+        email: "dgross@instructors.2u.com",
+        password: "chartreuse",
+    },
 ];
 connection_1.default.once("open", function () {
     return __awaiter(this, void 0, void 0, function* () {

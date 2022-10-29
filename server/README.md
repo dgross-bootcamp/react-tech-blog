@@ -16,9 +16,9 @@
 ## Related
 
 - Add hash passwords w/ bcrypt
+- Seed data to make sure all this nonsense works
+- BONUS: md5 has the emails to make the gravatar link
 - Make JWT
 - Validate JWT
 - Decrypt JWT
 - Put the JWT data our Apollo GraphQL Context
-- Seed data to make sure all this nonsense works
-- BONUS: md5 has the emails to make the gravatar link
