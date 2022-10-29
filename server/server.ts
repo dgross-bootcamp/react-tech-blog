@@ -1,11 +1,12 @@
-import { ApolloServer } from "apollo-server-express";
 import dotenv from "dotenv";
+dotenv.config({});
+import { ApolloServer } from "apollo-server-express";
 import express, { Express, Request } from "express";
 import db from "./config/connection";
 import resolvers from "./schemas/resolvers";
 import typeDefs from "./schemas/typeDefs";
 import authMiddleware from "./utils/authMiddleware";
-dotenv.config({});
+
 /**
  * Express Stuff
  */
