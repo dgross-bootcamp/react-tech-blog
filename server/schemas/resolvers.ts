@@ -1,5 +1,6 @@
 import Book, { IBook } from "../models/Book";
 import Profile, { IProfile } from "../models/Profile";
+import { signToken } from "../utils/authMiddleware";
 
 const resolvers = {
   Query: {
@@ -8,6 +9,21 @@ const resolvers = {
     },
     profiles: async function (): Promise<IProfile[]> {
       return Profile.find({});
+    },
+  },
+  Mutation: {
+    addProfile: async (
+      _: any,
+      {
+        name,
+        email,
+        password,
+      }: { name: string; email: string; password: string }
+    ) => {
+      const profile = await Profile.create({ name, email, password });
+      const token = signToken(profile);
+
+      return { token, profile };
     },
   },
 };

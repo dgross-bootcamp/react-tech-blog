@@ -19,6 +19,15 @@ const typeDefs = gql`
     books: [Book]
     profiles: [Profile]
   }
+
+  type Auth {
+    token: ID!
+    profile: Profile
+  }
+
+  type Mutation {
+    addProfile(name: String!, email: String!, password: String!): Auth
+  }
 `;
 
 export default typeDefs;
