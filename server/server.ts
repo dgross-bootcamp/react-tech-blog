@@ -1,22 +1,23 @@
-import { ApolloServer, ExpressContext } from "apollo-server-express";
-import express, { Express, NextFunction, Request, Response } from "express";
+import { ApolloServer } from "apollo-server-express";
+import dotenv from "dotenv";
+import express, { Express, Request } from "express";
+import db from "./config/connection";
 import resolvers from "./schemas/resolvers";
 import typeDefs from "./schemas/typeDefs";
-import db from "./config/connection";
+import authMiddleware from "./utils/authMiddleware";
+dotenv.config({});
 /**
  * Express Stuff
  */
 const app: Express = express();
 const PORT: string | number = process.env.PORT || 8080;
-app.get("/", (req: Request, res: Response, next: NextFunction) => {
-  res.send("Back at 12:30!");
-});
 /**
  * Apollo GraphQL Stuff
  */
-const apolloServer: ApolloServer<ExpressContext> = new ApolloServer({
+const apolloServer: ApolloServer<Request> = new ApolloServer({
   typeDefs,
   resolvers,
+  context: authMiddleware,
 });
 
 (async function startApolloServer() {
