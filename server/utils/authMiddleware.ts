@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import { HydratedDocument } from "mongoose";
 import { IProfile } from "../models/Profile";
-import { JwtProfile } from "../types/types";
+import { AuthContext, JwtProfile } from "../types/types";
 
 const secret = process.env.SECRET_KEY;
+const TOKEN_EXPIRATION = "2h";
 
 function authMiddleware(req: Request, res: Response, next: NextFunction) {
   const authHeader = req?.headers?.["authorization"];
@@ -19,7 +21,9 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
   }
 
   try {
-    const { data } = jwt.verify(token, secret!, { maxAge: "2h" }) as JwtProfile;
+    const { data } = jwt.verify(token, secret!, {
+      maxAge: TOKEN_EXPIRATION,
+    }) as JwtProfile;
     req.profile = data;
   } catch (error) {
     console.log("Invalid token");
@@ -28,14 +32,11 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
   return req;
 }
 
-export function signToken(profileData: IProfile) {
-  return jwt.sign(
-    {
-      data: { name: profileData.name, email: profileData.email },
-    },
-    secret!,
-    { expiresIn: "2h" }
-  );
+export function signToken({ _id, name, email }: HydratedDocument<IProfile>) {
+  const authContext: AuthContext = { _id, name, email };
+  return jwt.sign({ data: authContext }, secret!, {
+    expiresIn: TOKEN_EXPIRATION,
+  });
 }
 
 export default authMiddleware;

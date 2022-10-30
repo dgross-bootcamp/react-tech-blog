@@ -34,10 +34,10 @@ profileSchema.pre("save", async function (next) {
   next();
 });
 
-profileSchema.virtual("gravitron").get(function () {
+profileSchema.virtual("gravatar").get(function () {
   const hash: string = crypto
     .createHash("md5")
-    .update(this.password)
+    .update(this.password.toLowerCase())
     .digest("hex");
   return `https://www.gravatar.com/avatar/${hash}`;
 });

@@ -1,17 +1,5 @@
 import db from "../config/connection";
-import Book, { IBook } from "../models/Book";
 import Profile, { IProfile } from "../models/Profile";
-
-const books: IBook[] = [
-  {
-    title: "The Awakening",
-    author: "Kate Chopin",
-  },
-  {
-    title: "City of Glass",
-    author: "Paul Auster",
-  },
-];
 
 const profiles: IProfile[] = [
   {
@@ -28,10 +16,7 @@ const profiles: IProfile[] = [
 
 db.once("open", async function () {
   try {
-    await Book.deleteMany({});
     await Profile.deleteMany({});
-
-    await Book.create(books);
     await Profile.create(profiles);
 
     console.log("🌱 Database Seeded! 🌱");
