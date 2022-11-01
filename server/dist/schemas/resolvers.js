@@ -12,28 +12,60 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Book_1 = __importDefault(require("../models/Book"));
-const Profile_1 = __importDefault(require("../models/Profile"));
+const apollo_server_express_1 = require("apollo-server-express");
+const User_1 = __importDefault(require("../models/User"));
 const authMiddleware_1 = require("../utils/authMiddleware");
 const resolvers = {
     Query: {
-        books: function () {
+        getUser: function (_, __, { user: { email } }) {
             return __awaiter(this, void 0, void 0, function* () {
-                return Book_1.default.find({});
-            });
-        },
-        profiles: function () {
-            return __awaiter(this, void 0, void 0, function* () {
-                return Profile_1.default.find({});
+                const user = yield User_1.default.findOne({ email });
+                if (user) {
+                    const token = (0, authMiddleware_1.signToken)(user);
+                    return {
+                        bio: user.bio,
+                        email: user.email,
+                        image: user.image,
+                        token: token,
+                        username: user.username,
+                    };
+                }
+                throw new apollo_server_express_1.AuthenticationError("Error while getting user!");
             });
         },
     },
     Mutation: {
-        addProfile: (_, { name, email, password, }) => __awaiter(void 0, void 0, void 0, function* () {
-            const profile = yield Profile_1.default.create({ name, email, password });
-            const token = (0, authMiddleware_1.signToken)(profile);
-            return { token, profile };
-        }),
+        register: function (_, { username, email, password }) {
+            return __awaiter(this, void 0, void 0, function* () {
+                const user = yield User_1.default.create({ username, email, password });
+                const token = (0, authMiddleware_1.signToken)(user);
+                return {
+                    bio: user.bio,
+                    email: user.email,
+                    image: user.image,
+                    token: token,
+                    username: user.username,
+                };
+            });
+        },
+        login: function (_, { email, password }) {
+            return __awaiter(this, void 0, void 0, function* () {
+                const user = yield User_1.default.findOne({ email });
+                if (user) {
+                    if (yield user.passwordIsCorrect(password)) {
+                        const token = (0, authMiddleware_1.signToken)(user);
+                        return {
+                            bio: user.bio,
+                            email: user.email,
+                            image: user.image,
+                            token: token,
+                            username: user.username,
+                        };
+                    }
+                }
+                throw new apollo_server_express_1.AuthenticationError("Error while logging in!");
+            });
+        },
     },
 };
 exports.default = resolvers;

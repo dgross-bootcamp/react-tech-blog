@@ -1,12 +1,16 @@
 import { JwtPayload } from "jsonwebtoken";
-import { HydratedDocument } from "mongoose";
-import { IProfile } from "../models/Profile";
+import { IUser } from "../models/User";
 
-export type AuthContext = Pick<
-  HydratedDocument<IProfile>,
-  "_id" | "name" | "email"
->;
+export type AuthContext = Pick<IUser, "_id" | "username" | "email">;
 
 export interface JwtProfile extends JwtPayload {
   data: AuthContext;
+}
+
+export interface UserDTO {
+  email: string;
+  token: string;
+  username: string;
+  bio: string;
+  image: string;
 }

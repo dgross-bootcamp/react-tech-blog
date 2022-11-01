@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config({});
-import { ApolloServer } from "apollo-server-express";
+import { ApolloServer, ExpressContext } from "apollo-server-express";
 import express, { Express, Request } from "express";
 import db from "./config/connection";
 import resolvers from "./schemas/resolvers";
@@ -15,7 +15,7 @@ const PORT: string | number = process.env.PORT || 8080;
 /**
  * Apollo GraphQL Stuff
  */
-const apolloServer: ApolloServer<Request> = new ApolloServer({
+const apolloServer: ApolloServer<ExpressContext> = new ApolloServer({
   typeDefs,
   resolvers,
   context: authMiddleware,

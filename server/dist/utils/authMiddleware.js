@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.signToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const secret = process.env.SECRET_KEY;
-function authMiddleware(req, res, next) {
-    var _a;
-    const authHeader = (_a = req === null || req === void 0 ? void 0 : req.headers) === null || _a === void 0 ? void 0 : _a["authorization"];
+const TOKEN_EXPIRATION = "2h";
+function authMiddleware({ req }) {
+    const authHeader = req.headers["authorization"];
     if (!authHeader) {
         return req;
     }
@@ -17,18 +17,27 @@ function authMiddleware(req, res, next) {
         return req;
     }
     try {
-        const { data } = jsonwebtoken_1.default.verify(token, secret, { maxAge: "2h" });
-        req.profile = data;
+        const { data } = jsonwebtoken_1.default.verify(token, secret, {
+            maxAge: TOKEN_EXPIRATION,
+        });
+        req.user = data;
     }
     catch (error) {
         console.log("Invalid token");
     }
     return req;
 }
-function signToken(profileData) {
-    return jsonwebtoken_1.default.sign({
-        data: { name: profileData.name, email: profileData.email },
-    }, secret, { expiresIn: "2h" });
+function signToken({ _id, username, email }) {
+    const payload = {
+        data: {
+            username,
+            _id,
+            email,
+        },
+    };
+    return jsonwebtoken_1.default.sign(payload, secret, {
+        expiresIn: TOKEN_EXPIRATION,
+    });
 }
 exports.signToken = signToken;
 exports.default = authMiddleware;

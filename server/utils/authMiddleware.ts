@@ -1,14 +1,13 @@
-import { NextFunction, Request, Response } from "express";
+import { Request } from "express";
 import jwt from "jsonwebtoken";
-import { HydratedDocument } from "mongoose";
-import { IProfile } from "../models/Profile";
-import { AuthContext, JwtProfile } from "../types/types";
+import { IUser } from "../models/User";
+import { JwtProfile } from "../types/types";
 
 const secret = process.env.SECRET_KEY;
 const TOKEN_EXPIRATION = "2h";
 
-function authMiddleware(req: Request, res: Response, next: NextFunction) {
-  const authHeader = req?.headers?.["authorization"];
+function authMiddleware({ req }: { req: Request }) {
+  const authHeader = req.headers["authorization"];
 
   if (!authHeader) {
     return req;
@@ -24,7 +23,7 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
     const { data } = jwt.verify(token, secret!, {
       maxAge: TOKEN_EXPIRATION,
     }) as JwtProfile;
-    req.profile = data;
+    req.user = data;
   } catch (error) {
     console.log("Invalid token");
   }
@@ -32,9 +31,15 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
   return req;
 }
 
-export function signToken({ _id, name, email }: HydratedDocument<IProfile>) {
-  const authContext: AuthContext = { _id, name, email };
-  return jwt.sign({ data: authContext }, secret!, {
+export function signToken({ _id, username, email }: IUser) {
+  const payload: Pick<JwtProfile, "data"> = {
+    data: {
+      username,
+      _id,
+      email,
+    },
+  };
+  return jwt.sign(payload, secret!, {
     expiresIn: TOKEN_EXPIRATION,
   });
 }
