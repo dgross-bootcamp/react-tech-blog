@@ -1,9 +1,39 @@
+import { gql, useMutation } from "@apollo/client";
 import React, { FormEvent, useState } from "react";
+import Auth from "../../utils/Auth";
 import styles from "./Login.module.css";
+
+interface UserDTO {
+  email: string;
+  token: string;
+  username: string;
+  bio: string;
+  image: string;
+}
+
+interface LoginMutationVariables {
+  email: string;
+  password: string;
+}
+
+const LOGIN = gql`
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      email
+      token
+      username
+      bio
+      image
+    }
+  }
+`;
 
 const Login: React.FC<{}> = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [login] = useMutation<{ login: UserDTO }, LoginMutationVariables>(
+    LOGIN
+  );
 
   const handleEmailChange = (e: FormEvent<HTMLInputElement>) => {
     setEmail(e.currentTarget.value);
@@ -13,8 +43,22 @@ const Login: React.FC<{}> = () => {
     setPassword(e.currentTarget.value);
   };
 
-  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    try {
+      const response = await login({
+        variables: {
+          email,
+          password,
+        },
+      });
+
+      Auth.login(response.data?.login.token!);
+    } catch (e) {
+      console.error(e);
+    }
+
     setEmail("");
     setPassword("");
   };
