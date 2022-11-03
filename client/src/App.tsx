@@ -13,6 +13,10 @@ import {
   ApolloProvider,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import Profile from "./Pages/Profile/Profile";
+import ProfileArticles from "./Pages/Profile/ProfileArticles/ProfileArticles";
+import ProfileFavorites from "./Pages/Profile/ProfileFavorites/ProfileFavorites";
+import Settings from "./Pages/Settings/Settings";
 
 const httpLink: ApolloLink = createHttpLink({
   uri: "/graphql",
@@ -43,6 +47,12 @@ const App: React.FC<{}> = () => {
           <Route path="blog" element={<Blog />} />
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />
+          <Route path="profile" element={<Profile />}>
+            <Route index element={<ProfileArticles />} />
+            <Route path="articles" element={<ProfileArticles />} />
+            <Route path="favorites" element={<ProfileFavorites />} />
+          </Route>
+          <Route path="settings" element={<Settings />} />
           <Route path="*" element={<Error />} />
         </Route>
       </Routes>
