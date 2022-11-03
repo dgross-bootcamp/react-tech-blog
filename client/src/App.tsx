@@ -23,7 +23,7 @@ const httpLink: ApolloLink = createHttpLink({
 });
 
 const authLink: ApolloLink = setContext((_: any, { headers }: any) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("id_token");
 
   return {
     headers: {
