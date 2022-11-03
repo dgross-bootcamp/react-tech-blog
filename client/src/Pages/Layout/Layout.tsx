@@ -5,13 +5,13 @@ import Header from "./Components/Header";
 
 const Layout: React.FC<{}> = () => {
   return (
-    <>
-      <div className="container">
+    <div className="d-flex flex-column">
+      <div className="container flex-grow-1">
         <Header />
         <Outlet />
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
