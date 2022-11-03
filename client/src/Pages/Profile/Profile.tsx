@@ -39,7 +39,7 @@ export default function Login() {
               <h4 className="display-4">{data.getUser.username}</h4>
               <p className={`${styles.Description}`}>{data.getUser.bio}</p>
               <Link
-                to="/"
+                to="/settings"
                 className={`${styles.UserSettings} btn btn-sm btn-outline-secondary`}
               >
                 <i className={`${styles.UserSettingsIcon}`}>
