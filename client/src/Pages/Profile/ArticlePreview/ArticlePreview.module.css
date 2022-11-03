@@ -1,0 +1,117 @@
+.ProfileFavorites {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1.5rem 0;
+}
+
+.ArticlePreview {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1.5rem 0;
+}
+
+.ArticleMeta {
+  margin: 0 0 1rem 0;
+  display: flex;
+  position: relative;
+  font-weight: 300;
+}
+
+.ArticleLink {
+  color: green;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.ArticleImage {
+  display: inline-block;
+  vertical-align: middle;
+  height: 32px;
+  width: 32px;
+  border-radius: 30px;
+  border: 0;
+}
+
+.ArticleInfo {
+  margin: 0 1.5rem 0 0.3rem;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1rem;
+}
+
+.ArticleAuthor {
+  display: block;
+  font-weight: 500 !important;
+  color: green;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.ArticleAuthor:hover {
+  color: green;
+  text-decoration: underline;
+}
+
+.ArticleDate {
+  color: #bbb;
+  font-size: 0.8rem;
+  display: block;
+}
+
+.ArticleIcon {
+  margin-left: auto;
+}
+.ArticleIcon::after {
+  content: "💚";
+}
+
+.ArticleFavorite {
+  margin-left: auto;
+}
+
+.ArticleFavoriteButton {
+  color: green !important;
+  border-color: green !important;
+}
+
+.ArticlePreview {
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.ArticlePreviewHeading {
+  font-weight: 600;
+  font-size: 24px;
+  margin-bottom: 3px;
+  color: black;
+}
+
+.ArticlePreviewBody {
+  font-weight: 300;
+  color: #999;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  line-height: 1.3rem;
+  margin-top: 0;
+}
+
+.ArticlePreviewMore {
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: #bbb;
+  vertical-align: middle;
+}
+
+.TagList {
+  display: flex;
+  justify-content: flex-end;
+  list-style-type: none;
+}
+
+.TagItem {
+  border: 1px solid #ddd;
+  color: #aaa;
+  background: none;
+  display: inline-block;
+  border-radius: 10rem;
+  padding: 0 0.6em;
+  margin: 0 3px 0.2rem 0;
+}
