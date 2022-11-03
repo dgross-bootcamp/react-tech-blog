@@ -3,11 +3,9 @@ import { Link, Outlet } from "react-router-dom";
 import styles from "./Profile.module.css";
 
 interface UserDTO {
-  getUser: {
-    username: string;
-    bio: string;
-    image: string;
-  };
+  username: string;
+  bio: string;
+  image: string;
 }
 
 const QUERY_GET_USER = gql`
@@ -21,7 +19,7 @@ const QUERY_GET_USER = gql`
 `;
 
 export default function Login() {
-  const { loading, data } = useQuery<UserDTO>(QUERY_GET_USER);
+  const { loading, data } = useQuery<{ getUser: UserDTO }>(QUERY_GET_USER);
 
   if (loading || !data) {
     return <p>Loading...</p>;
