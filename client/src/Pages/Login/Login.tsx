@@ -1,15 +1,8 @@
 import { gql, useMutation } from "@apollo/client";
 import React, { FormEvent, useState } from "react";
+import { UserDTO } from "../../types/types";
 import Auth from "../../utils/Auth";
 import styles from "./Login.module.css";
-
-interface UserDTO {
-  email: string;
-  token: string;
-  username: string;
-  bio: string;
-  image: string;
-}
 
 interface LoginMutationVariables {
   email: string;
