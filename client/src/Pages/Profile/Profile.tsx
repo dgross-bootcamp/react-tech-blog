@@ -1,21 +1,45 @@
+import { gql, useQuery } from "@apollo/client";
 import { Link, Outlet } from "react-router-dom";
 import styles from "./Profile.module.css";
 
+interface UserDTO {
+  getUser: {
+    username: string;
+    bio: string;
+    image: string;
+  };
+}
+
+const QUERY_GET_USER = gql`
+  query getUser {
+    getUser {
+      username
+      bio
+      image
+    }
+  }
+`;
+
 export default function Login() {
+  const { loading, data } = useQuery<UserDTO>(QUERY_GET_USER);
+
+  if (loading || !data) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div>
       <div className={`${styles.UserInfo}`}>
         <div className="container">
           <div className="row">
             <div className="col-xs-12 col-md-10 offset-md-1 d-flex flex-column align-items-center">
-              <img src="dan.jpg" className={`${styles.UserImage}`} alt="" />
-              <h4 className="display-4">Daniel Gross</h4>
-              <p className={`${styles.Description}`}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Nesciunt harum excepturi blanditiis magnam! Rerum, placeat et?
-                Debitis est at iusto nostrum neque aliquam, ad voluptates
-                praesentium dolores omnis iure possimus!
-              </p>
+              <img
+                src={data.getUser.image}
+                className={`${styles.UserImage}`}
+                alt={data.getUser.username}
+              />
+              <h4 className="display-4">{data.getUser.username}</h4>
+              <p className={`${styles.Description}`}>{data.getUser.bio}</p>
               <Link
                 to="/"
                 className={`${styles.UserSettings} btn btn-sm btn-outline-secondary`}
