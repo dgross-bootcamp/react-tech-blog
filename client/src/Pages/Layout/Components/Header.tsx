@@ -21,8 +21,13 @@ const Header: React.FC<{}> = () => {
               />
             </Link>
           </div>
-          <div className="col-1"></div>
-          <div className="col-2 d-flex justify-content-around align-items-center">
+          <div className="col-3 d-flex justify-content-around align-items-center">
+            <Link to="/settings" className="btn btn-sm btn-outline-secondary">
+              Settings
+            </Link>
+            <Link to="/profile" className="btn btn-sm btn-outline-secondary">
+              Profile
+            </Link>
             <Link to="/login" className="btn btn-sm btn-outline-secondary">
               Login
             </Link>
