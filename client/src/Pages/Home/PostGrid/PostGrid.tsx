@@ -8,8 +8,8 @@ import styles from "./PostGrid.module.css";
 const PostGrid: React.FC<{}> = () => {
   return (
     <Row xs={1} md={2} className="g-4">
-      {Array.from({ length: 6 }).map((_) => (
-        <Col>
+      {Array.from({ length: 6 }).map((_, index) => (
+        <Col key={index}>
           <Card className="shadow-sm">
             <Card.Body>
               <Card.Title className="fs-4">Blog Title</Card.Title>

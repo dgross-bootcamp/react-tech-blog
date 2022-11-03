@@ -7,8 +7,8 @@ const FeaturedPosts: React.FC<{}> = () => {
     <>
       <JumbotronFeaturedPost />
       <div className="row">
-        {Array.from({ length: 2 }).map((_) => (
-          <HorizontalFeaturedPost />
+        {Array.from({ length: 2 }).map((_, index) => (
+          <HorizontalFeaturedPost key={index} />
         ))}
       </div>
     </>
