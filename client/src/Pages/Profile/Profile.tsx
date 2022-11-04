@@ -1,25 +1,13 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { Link, Outlet } from "react-router-dom";
+import { UserDTO } from "../../types/types";
+import { QUERY_GET_USER } from "../../utils/queries/getUser";
 import styles from "./Profile.module.css";
 
-interface UserDTO {
-  username: string;
-  bio: string;
-  image: string;
-}
-
-const QUERY_GET_USER = gql`
-  query getUser {
-    getUser {
-      username
-      bio
-      image
-    }
-  }
-`;
-
 export default function Login() {
-  const { loading, data } = useQuery<{ getUser: UserDTO }>(QUERY_GET_USER);
+  const { loading, data } = useQuery<{
+    getUser: Pick<UserDTO, "username" | "image" | "bio">;
+  }>(QUERY_GET_USER);
 
   if (loading || !data) {
     return <p>Loading...</p>;
