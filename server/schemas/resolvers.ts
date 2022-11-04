@@ -15,6 +15,14 @@ interface LoginMutationArgs {
   password: string;
 }
 
+interface UpdateUserMutationArgs {
+  email?: string;
+  username?: string;
+  password?: string;
+  image?: string;
+  bio?: string;
+}
+
 const resolvers = {
   Query: {
     getUser: async function (
@@ -72,6 +80,40 @@ const resolvers = {
         }
       }
       throw new AuthenticationError("Error while logging in!");
+    },
+    updateUser: async function (
+      _: undefined,
+      updateUserMutationArgs: UpdateUserMutationArgs,
+      { user: { email } }: Request
+    ): Promise<UserDTO> {
+      const updatedProperties = Object.fromEntries(
+        Object.entries(updateUserMutationArgs).filter(
+          ([_, value]) => value !== ""
+        )
+      );
+
+      const user = await User.findOneAndUpdate(
+        { email },
+        {
+          ...updatedProperties,
+        },
+        {
+          new: true,
+        }
+      );
+
+      if (user) {
+        const token = signToken(user);
+
+        return {
+          bio: user.bio,
+          email: user.email,
+          image: user.image,
+          token: token,
+          username: user.username,
+        };
+      }
+      throw new AuthenticationError("Error while getting user!");
     },
   },
 };

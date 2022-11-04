@@ -66,6 +66,25 @@ const resolvers = {
                 throw new apollo_server_express_1.AuthenticationError("Error while logging in!");
             });
         },
+        updateUser: function (_, updateUserMutationArgs, { user: { email } }) {
+            return __awaiter(this, void 0, void 0, function* () {
+                const updatedProperties = Object.fromEntries(Object.entries(updateUserMutationArgs).filter(([_, value]) => value !== ""));
+                const user = yield User_1.default.findOneAndUpdate({ email }, Object.assign({}, updatedProperties), {
+                    new: true,
+                });
+                if (user) {
+                    const token = (0, authMiddleware_1.signToken)(user);
+                    return {
+                        bio: user.bio,
+                        email: user.email,
+                        image: user.image,
+                        token: token,
+                        username: user.username,
+                    };
+                }
+                throw new apollo_server_express_1.AuthenticationError("Error while getting user!");
+            });
+        },
     },
 };
 exports.default = resolvers;
